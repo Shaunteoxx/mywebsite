@@ -191,7 +191,7 @@ export const certs = [
 ];
 
 export const socials = [
-  { label: "Email", href: "mailto:shaun.teo.2024@computing.smu.edu.sg", kind: "mail" },
+  { label: "Email", href: "mailto:shaunteo2003@gmail.com", kind: "mail" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/shaun-teo-075a6a332", kind: "linkedin" },
   { label: "Phone", href: "tel:+6587874272", kind: "phone" },
 ];

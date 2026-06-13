@@ -28,11 +28,11 @@ export default function Contact() {
         </p>
 
         <a
-          href="mailto:shaun.teo.2024@computing.smu.edu.sg"
+          href="mailto:shaunteo2003@gmail.com"
           className="mt-8 inline-flex items-center gap-2 rounded-full bg-sun px-8 py-4 font-display text-lg font-semibold text-ink transition-transform duration-200 hover:-translate-y-0.5 hover:bg-coral hover:text-sand"
         >
           <Mail className="h-5 w-5" />
-          shaun.teo.2024@computing.smu.edu.sg
+          shaunteo2003@gmail.com
         </a>
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
