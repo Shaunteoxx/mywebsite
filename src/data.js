@@ -81,6 +81,58 @@ export const projects = [
   },
 ];
 
+// Short, scannable "proud of" highlights for the horizontal rail.
+export const wins = [
+  {
+    tag: "Endurance",
+    title: "2XU Half Marathon",
+    stat: "21.1 km",
+    blurb: "Trained for months, then ran the whole thing and surprised myself with an okay timing (2hr 17mins) LOL.",
+    accent: "sky",
+    emoji: "🏅",
+  },
+  {
+    tag: "Hackathon",
+    title: "Built “Let’s Cook”",
+    stat: "SMU.Hack HEAP",
+    blurb: "Shipped a full-stack recipe + cooking app with 4 teammates over a single hackathon sprint.",
+    accent: "coral",
+    emoji: "🍳",
+  },
+  {
+    tag: "Certified",
+    title: "Google Data Analytics",
+    stat: "Professional Cert",
+    blurb: "Cleaned messy data in SQL & R and built end-to-end dashboards in Tableau.",
+    accent: "ocean",
+    emoji: "📊",
+  },
+  {
+    tag: "Design",
+    title: "Judokas Connect identity",
+    stat: "One summer",
+    blurb: "Went from “what is CSS” to designing a whole app’s visual language in a few weeks.",
+    accent: "grape",
+    emoji: "🎨",
+  },
+  {
+    tag: "Leadership",
+    title: "Tech Series Hackathon",
+    stat: "Co-organised 2025",
+    blurb: "Helped plan and run a campus-wide hackathon end to end as part of the CIS Society.",
+    accent: "sun",
+    emoji: "🤝",
+  },
+  {
+    tag: "Community",
+    title: "Project YOLO",
+    stat: "2 years",
+    blurb: "Mentored 7 Year-1 students and ran heritage-education experiences for underprivileged kids.",
+    accent: "coral",
+    emoji: "🧒",
+  },
+];
+
 export const skillGroups = [
   {
     label: "Building things",
@@ -106,6 +158,8 @@ export const marqueeWords = [
   "Full-stack",
   "Data viz",
   "Beach volleyball",
+  "Running",
+  "Photography",
   "Cycling",
   "Basketball",
   "Hackathons",
@@ -117,6 +171,8 @@ export const marqueeWords = [
 export const funFacts = [
   "I'll trade a sunny afternoon for a beach-volleyball game any day.",
   "Two wheels > four. Long cycling rides are my reset button.",
+  "I'm always chasing good light — there's usually a camera in my bag.",
+  "21.1km at the 2XU Half Marathon — equal parts training and pure stubbornness.",
   "Google Data Analytics certified — I genuinely enjoy cleaning messy data.",
   "I went from 'what is CSS' to designing a whole app's look in one summer.",
 ];

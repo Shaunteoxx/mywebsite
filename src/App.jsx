@@ -1,7 +1,9 @@
 import Navbar from "./components/Navbar";
 import ScrollProgress from "./components/ScrollProgress";
+import CursorGlow from "./components/CursorGlow";
 import Hero from "./components/Hero";
 import Marquee from "./components/Marquee";
+import Wins from "./components/Wins";
 import Projects from "./components/Projects";
 import About from "./components/About";
 import Contact from "./components/Contact";
@@ -15,11 +17,13 @@ export default function App() {
       >
         Skip to content
       </a>
+      <CursorGlow />
       <ScrollProgress />
       <Navbar />
       <main>
         <Hero />
         <Marquee />
+        <Wins />
         <Projects />
         <About />
       </main>

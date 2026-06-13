@@ -7,9 +7,9 @@ import {
   useTransform,
   useReducedMotion,
 } from "motion/react";
-import { Volleyball, Basketball, Bike, Sun, Star } from "./Doodles";
+import { MikasaBall, Basketball, Bike, Sun, Star, Camera, Stopwatch } from "./Doodles";
 
-const roles = ["builds web apps", "loves clean data", "plays beach volleyball", "rides bikes", "ships fast"];
+const roles = ["builds web apps", "loves clean data", "plays beach volleyball", "runs half marathons", "shoots photos"];
 
 // Floating doodles get a parallax offset based on cursor position.
 function ParallaxDoodle({ children, depth, className, reduced }) {
@@ -43,6 +43,85 @@ export default function Hero() {
   const [tossed, setTossed] = useState(false);
   const constraints = useRef(null);
 
+  // Volleyball physics: throw it with the flick velocity, then a light
+  // "balloon" gravity arcs it back down to its resting line. It bounces off
+  // the viewport walls instead of sticking to them.
+  const ballRef = useRef(null);
+  const ballX = useMotionValue(0);
+  const ballY = useMotionValue(0); // 0 = resting line; negative = above it
+  const vel = useRef({ x: 0, y: 0 });
+  const rafId = useRef(0);
+  const lastT = useRef(0);
+
+  const stopSim = () => {
+    if (rafId.current) cancelAnimationFrame(rafId.current);
+    rafId.current = 0;
+  };
+
+  const step = (t) => {
+    const dt = Math.min((t - lastT.current) / 1000, 0.032);
+    lastT.current = t;
+
+    let x = ballX.get();
+    let y = ballY.get();
+    let { x: vx, y: vy } = vel.current;
+
+    vy += 1400 * dt; // gravity pulls down
+    const drag = Math.exp(-1.5 * dt); // air resistance keeps the fall floaty
+    vx *= drag;
+    vy *= drag;
+    x += vx * dt;
+    y += vy * dt;
+
+    if (y >= 0) {
+      // hit the resting line — springy bounce + a little ground friction
+      y = 0;
+      if (vy > 0) vy = -vy * 0.68;
+      vx *= 0.86;
+    }
+
+    // bounce off the viewport edges so it never sticks to the sides
+    const el = ballRef.current;
+    if (el) {
+      const r = el.getBoundingClientRect();
+      const pad = 6;
+      if (r.left < pad) {
+        x += pad - r.left;
+        vx = Math.abs(vx) * 0.68;
+      } else if (r.right > window.innerWidth - pad) {
+        x -= r.right - (window.innerWidth - pad);
+        vx = -Math.abs(vx) * 0.68;
+      }
+    }
+
+    ballX.set(x);
+    ballY.set(y);
+    vel.current = { x: vx, y: vy };
+
+    // settle once it's resting on the line with little energy left
+    if (y >= -0.6 && Math.abs(vy) < 30 && Math.abs(vx) < 12) {
+      ballY.set(0);
+      stopSim();
+      return;
+    }
+    rafId.current = requestAnimationFrame(step);
+  };
+
+  const throwBall = (_e, info) => {
+    setTossed(true);
+    if (reduced) {
+      ballX.set(0);
+      ballY.set(0);
+      return;
+    }
+    vel.current = { x: info.velocity.x, y: info.velocity.y };
+    lastT.current = performance.now();
+    stopSim();
+    rafId.current = requestAnimationFrame(step);
+  };
+
+  useEffect(() => () => stopSim(), []);
+
   useEffect(() => {
     const t = setInterval(() => setRoleIndex((i) => (i + 1) % roles.length), 2200);
     return () => clearInterval(t);
@@ -60,17 +139,23 @@ export default function Hero() {
       <div aria-hidden className="pointer-events-none absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-coral/20 blur-3xl" />
 
       {/* floating doodles */}
-      <ParallaxDoodle depth={28} reduced={reduced} className="left-[6%] top-[22%] hidden sm:block">
+      <ParallaxDoodle depth={50} reduced={reduced} className="left-[6%] top-[22%] hidden sm:block">
         <Sun className="h-12 w-12 text-sun" style={{ "--r": "0deg" }} />
       </ParallaxDoodle>
-      <ParallaxDoodle depth={50} reduced={reduced} className="right-[10%] top-[18%]">
+      <ParallaxDoodle depth={88} reduced={reduced} className="right-[10%] top-[18%]">
         <Bike className="h-14 w-14 text-ocean" />
       </ParallaxDoodle>
-      <ParallaxDoodle depth={36} reduced={reduced} className="right-[18%] bottom-[16%] hidden md:block">
+      <ParallaxDoodle depth={64} reduced={reduced} className="right-[18%] bottom-[16%] hidden md:block">
         <Basketball className="h-12 w-12 text-coral" />
       </ParallaxDoodle>
-      <ParallaxDoodle depth={20} reduced={reduced} className="left-[12%] bottom-[20%] hidden md:block">
+      <ParallaxDoodle depth={38} reduced={reduced} className="left-[12%] bottom-[20%] hidden md:block">
         <Star className="h-9 w-9 text-grape" />
+      </ParallaxDoodle>
+      <ParallaxDoodle depth={76} reduced={reduced} className="left-[5%] top-[52%] hidden lg:block">
+        <Camera className="h-14 w-14 text-grape" />
+      </ParallaxDoodle>
+      <ParallaxDoodle depth={68} reduced={reduced} className="right-[6%] top-[58%] hidden lg:block">
+        <Stopwatch className="h-14 w-14 text-sky" />
       </ParallaxDoodle>
 
       <div className="relative z-10 mx-auto w-full max-w-4xl text-center">
@@ -128,7 +213,7 @@ export default function Hero() {
           I'm studying <strong className="text-ink">Information Systems at SMU</strong>, doubling up on{" "}
           <strong className="text-ink">Business Analytics</strong> and{" "}
           <strong className="text-ink">FinTech</strong>. I like turning messy ideas into things people
-          actually use — and chasing volleyballs into the sand on weekends.
+          actually use — and chasing volleyballs (and good light for photos) on weekends.
         </motion.p>
 
         <motion.div
@@ -152,22 +237,27 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Signature element: a beach volleyball you can grab and toss around */}
+      {/* Signature element: a beach volleyball you can grab and toss — it
+          falls back to its floor line above the basketball with gravity. */}
       <motion.div
+        ref={ballRef}
         drag
-        dragConstraints={constraints}
-        dragElastic={0.5}
-        dragTransition={{ bounceStiffness: 300, bounceDamping: 14 }}
-        whileTap={{ cursor: "grabbing", scale: 1.1 }}
+        dragMomentum={false}
+        style={{ x: ballX, y: ballY }}
+        whileTap={{ cursor: "grabbing", scale: 1.12 }}
         whileHover={{ scale: 1.06 }}
-        onDragStart={() => setTossed(true)}
-        className="absolute bottom-10 left-1/2 z-20 -ml-9 cursor-grab touch-none"
+        onDragStart={() => {
+          stopSim();
+          setTossed(true);
+        }}
+        onDragEnd={throwBall}
+        className="absolute bottom-[17%] left-1/2 z-20 -ml-9 cursor-grab touch-none"
       >
         <motion.div
-          animate={reduced ? {} : { rotate: [0, 14, -14, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          animate={reduced ? {} : { rotate: [0, 10, -10, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
         >
-          <Volleyball className="h-16 w-16 text-coral drop-shadow-[0_10px_18px_rgba(255,107,92,0.45)] sm:h-20 sm:w-20" />
+          <MikasaBall className="h-16 w-16 drop-shadow-[0_10px_18px_rgba(27,42,65,0.30)] sm:h-20 sm:w-20" />
         </motion.div>
         <AnimatePresence>
           {!tossed && (

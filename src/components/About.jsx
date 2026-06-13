@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Code2, BarChart3, Sparkles, RefreshCw } from "lucide-react";
 import { skillGroups, funFacts, certs } from "../data";
-import { Volleyball, Bike, Basketball } from "./Doodles";
+import { Volleyball, Bike, Basketball, Camera, Stopwatch } from "./Doodles";
 
 const groupIcons = {
   code: Code2,
@@ -12,6 +12,8 @@ const groupIcons = {
 
 const hobbies = [
   { name: "Beach volleyball", Icon: Volleyball, tint: "text-coral", bg: "bg-coral/12" },
+  { name: "Running", Icon: Stopwatch, tint: "text-sky", bg: "bg-sky/12" },
+  { name: "Photography", Icon: Camera, tint: "text-grape", bg: "bg-grape/12" },
   { name: "Cycling", Icon: Bike, tint: "text-ocean-deep", bg: "bg-ocean/12" },
   { name: "Basketball", Icon: Basketball, tint: "text-sun", bg: "bg-sun/20" },
 ];
@@ -39,8 +41,9 @@ export default function About() {
                 <em>product</em>, which suits me.
               </p>
               <p className="mt-4 text-lg leading-relaxed text-ink-soft">
-                When I'm not at a laptop, I'm probably outside — diving for a dig on the sand court, on a long ride,
-                or running a fast break.
+                When I'm not at a laptop, I'm probably outside — diving for a dig on the sand court, logging
+                kilometres on a run (yes, I survived the 2XU Half Marathon), on a long ride, or out with my
+                camera chasing good light.
               </p>
             </div>
 

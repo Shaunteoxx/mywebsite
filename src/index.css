@@ -59,9 +59,9 @@ body {
 
 @keyframes float-slow {
   0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
-  50% { transform: translateY(-18px) rotate(var(--r, 0deg)); }
+  50% { transform: translateY(-34px) rotate(calc(var(--r, 0deg) + 6deg)); }
 }
-.float-slow { animation: float-slow 7s ease-in-out infinite; }
+.float-slow { animation: float-slow 5.5s ease-in-out infinite; }
 
 @keyframes marquee {
   from { transform: translateX(0); }
