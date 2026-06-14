@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Code2, BarChart3, Sparkles, RefreshCw } from "lucide-react";
+import { Code2, BarChart3, Sparkles, RefreshCw, User } from "lucide-react";
 import { skillGroups, funFacts, certs } from "../data";
 import { Volleyball, Bike, Basketball, Camera, Stopwatch } from "./Doodles";
 
@@ -18,6 +18,33 @@ const hobbies = [
   { name: "Basketball", Icon: Basketball, tint: "text-sun", bg: "bg-sun/20" },
 ];
 
+// Shows your photo once public/me.jpg exists; a friendly placeholder until then.
+function Portrait() {
+  const [failed, setFailed] = useState(false);
+  if (failed) {
+    return (
+      <div className="grid h-28 w-28 shrink-0 place-items-center rounded-2xl border-2 border-dashed border-ink/20 bg-sand text-center text-ink-soft sm:h-36 sm:w-36">
+        <div className="flex flex-col items-center gap-1 px-2">
+          <User className="h-7 w-7 opacity-60" />
+          <span className="text-[11px] font-semibold leading-tight">
+            A photo of me
+            <br />
+            (drop public/me.jpg)
+          </span>
+        </div>
+      </div>
+    );
+  }
+  return (
+    <img
+      src="/me.jpg"
+      alt="Shaun"
+      onError={() => setFailed(true)}
+      className="h-28 w-28 shrink-0 rounded-2xl border-2 border-ink/10 object-cover sm:h-36 sm:w-36"
+    />
+  );
+}
+
 export default function About() {
   const [fact, setFact] = useState(0);
   const shuffle = () => setFact((f) => (f + 1) % funFacts.length);
@@ -34,17 +61,22 @@ export default function About() {
           {/* Intro + fun fact */}
           <div className="lg:col-span-3 flex flex-col gap-6">
             <div className="rounded-[28px] border-2 border-ink/10 bg-white/80 p-7 sm:p-9">
-              <p className="text-lg leading-relaxed text-ink">
-                I'm a <strong>chill, curious builder</strong> who genuinely enjoys the messy middle of a project —
-                wrangling data, sketching UI, and getting something working before a deadline. The Business
-                Analytics + FinTech double track means I get to live in both the <em>numbers</em> and the{" "}
-                <em>product</em>, which suits me.
-              </p>
-              <p className="mt-4 text-lg leading-relaxed text-ink-soft">
-                When I'm not at a laptop, I'm probably outside — diving for a dig on the sand court, logging
-                kilometres on a run (yes, I survived the 2XU Half Marathon), on a long ride, or out with my
-                camera chasing good light.
-              </p>
+              <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
+                <Portrait />
+                <div>
+                  <p className="text-lg leading-relaxed text-ink">
+                    I'm a <strong>chill, curious builder</strong> who genuinely enjoys the messy middle of a project —
+                    wrangling data, sketching UI, and getting something working before a deadline. The Business
+                    Analytics + FinTech double track means I get to live in both the <em>numbers</em> and the{" "}
+                    <em>product</em>, which suits me.
+                  </p>
+                  <p className="mt-4 text-lg leading-relaxed text-ink-soft">
+                    When I'm not at a laptop, I'm probably outside — diving for a dig on the sand court, logging
+                    kilometres on a run (yes, I survived the 2XU Half Marathon), on a long ride, or out with my
+                    camera chasing good light.
+                  </p>
+                </div>
+              </div>
             </div>
 
             <button

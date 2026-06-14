@@ -6,6 +6,7 @@ import Marquee from "./components/Marquee";
 import Wins from "./components/Wins";
 import Projects from "./components/Projects";
 import About from "./components/About";
+import Photography from "./components/Photography";
 import Contact from "./components/Contact";
 
 export default function App() {
@@ -26,6 +27,7 @@ export default function App() {
         <Wins />
         <Projects />
         <About />
+        <Photography />
       </main>
       <Contact />
     </>

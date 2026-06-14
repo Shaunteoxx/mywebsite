@@ -6,6 +6,15 @@ import { motion, useMotionValue, useSpring, useReducedMotion } from "motion/reac
 export default function CursorGlow() {
   const reduceMotion = useReducedMotion();
 
+  // Touch devices have no hovering cursor — skip tracking entirely (saves work
+  // on mobile and avoids the glow chasing taps). Detected synchronously.
+  const [isTouch] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia("(hover: none), (pointer: coarse)").matches
+  );
+  const isStatic = reduceMotion || isTouch;
+
   // Raw pointer position; default to center so SSR / no-mouse looks intentional.
   const x = useMotionValue(typeof window !== "undefined" ? window.innerWidth / 2 : 0);
   const y = useMotionValue(typeof window !== "undefined" ? window.innerHeight / 2 : 0);
@@ -18,7 +27,7 @@ export default function CursorGlow() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (reduceMotion) return;
+    if (isStatic) return;
 
     const move = (e) => {
       x.set(e.clientX);
@@ -36,10 +45,10 @@ export default function CursorGlow() {
       window.removeEventListener("pointerdown", move);
       document.removeEventListener("mouseleave", hide);
     };
-  }, [reduceMotion, x, y]);
+  }, [isStatic, x, y]);
 
-  // Reduced motion: render a single calm static glow, no tracking.
-  if (reduceMotion) {
+  // Reduced motion or touch: render a single calm static glow, no tracking.
+  if (isStatic) {
     return (
       <div
         aria-hidden="true"

@@ -1,4 +1,4 @@
-import { Mail, Phone, ArrowUpRight } from "lucide-react";
+import { Mail, ArrowUpRight } from "lucide-react";
 import { socials } from "../data";
 import { Volleyball, Sun } from "./Doodles";
 
@@ -10,7 +10,7 @@ function Linkedin({ className = "" }) {
   );
 }
 
-const iconMap = { mail: Mail, linkedin: Linkedin, phone: Phone };
+const iconMap = { mail: Mail, linkedin: Linkedin };
 
 export default function Contact() {
   return (

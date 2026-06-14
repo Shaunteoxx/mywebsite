@@ -8,6 +8,7 @@ export const projects = [
     period: "Oct 2025 · SMU.Hack HEAP",
     accent: "coral",
     emoji: "🍳",
+    caseStudy: true,
     blurb:
       "A full-stack recipe + cooking-management app built with 4 teammates over a hackathon sprint. It pulls 3,000+ recipes from the FatSecret API, then layers on the fun stuff: an interactive cooking mode with real-time timer detection, multi-timer management and audio cues so you never burn the garlic again.",
     learned:
@@ -19,7 +20,7 @@ export const projects = [
       "Mobile-first responsive design across 3 breakpoints",
     ],
     stack: ["Vue 3", "PrimeVue", "Tailwind CSS", "Firebase", "Gemini AI", "FatSecret API"],
-    links: [{ label: "View project", href: "#", kind: "demo" }],
+    links: [],
   },
   {
     id: "judokas-connect",
@@ -28,6 +29,7 @@ export const projects = [
     period: "May–Aug 2024 · Summer Project",
     accent: "ocean",
     emoji: "🥋",
+    caseStudy: true,
     blurb:
       "A full-stack web app for judokas, built with 4 teammates over an intense summer. I spearheaded the profile page and the whole colour-scheme/design language, plus an interactive calendar for attendance tracking and discussion forums for technique sharing and Q&A.",
     learned:
@@ -39,7 +41,93 @@ export const projects = [
       "Real-time judo news scraping from the IJF website",
     ],
     stack: ["HTML", "CSS", "Python", "Web scraping", "Full-stack"],
-    links: [{ label: "View project", href: "#", kind: "demo" }],
+    links: [],
+  },
+  {
+    id: "requirements-generator",
+    title: "Requirements Document Generator",
+    tagline: "AI that turns messy notes into company-standard docs",
+    period: "Internship build",
+    accent: "grape",
+    emoji: "📝",
+    caseStudy: true,
+    blurb:
+      "A full-stack internal tool that turns raw client notes into polished, company-standard requirements documents across four types (Customer, Business, Product and Integration). It replaces slow, inconsistent manual writing with a guided four-phase AI workflow: Analyze → Clarify → Review → Export.",
+    learned:
+      "Designing the workflow around 'ask only what's missing' taught me that good AI UX is as much about restraint as it is about generation.",
+    highlights: [
+      "Four-phase Gemini workflow: extracts requirements, asks only the clarifying questions it needs, drafts against templates, exports",
+      "Per-document-type context injection — non-engineers tune output by editing plain-text instruction/template files, no redeploy",
+      "One-click export + logging via Google Drive, Sheets and ClickUp APIs, with a Drive-backed document-relationship graph",
+      "FastAPI backend + React/Vite/Tailwind frontend with token-based Corridor OAuth and shared upload/review/output components",
+    ],
+    stack: ["Python", "FastAPI", "Google Gemini", "React", "React Router", "Tailwind CSS", "Google Drive/Sheets API", "ClickUp API"],
+    links: [],
+  },
+  {
+    id: "broke-no-more",
+    title: "Broke No More",
+    tagline: "A budgeting app that keeps students on track",
+    period: "Personal project",
+    accent: "sky",
+    emoji: "💸",
+    caseStudy: true,
+    blurb:
+      "A mobile-first, dark-first personal finance tracker for students. It tracks income and expenses, sets monthly savings targets, and keeps you on budget through a gamified daily-spending streak — all with a polished, native-app feel and full accessibility.",
+    learned:
+      "Building the streak engine statelessly pushed me to derive state from data instead of storing it everywhere — cleaner logic and far fewer edge-case bugs.",
+    highlights: [
+      "Stateless daily-budget streak engine that self-corrects a spending limit from income, savings targets and spend-to-date",
+      "Categorized transactions with live search, type filters, and optimistic delete + 10-second undo",
+      "Spending insights: saved-vs-spent and category donut charts, monthly trends, and a savings-rate leaderboard",
+      "Native-app UX: bottom-sheet flows, skeleton loading, dark mode, reduced-motion + safe-area support",
+    ],
+    stack: ["React", "Vite", "Tailwind CSS", "Framer Motion", "Recharts", "Node.js", "Express", "MongoDB", "Docker", "GCP / Vercel"],
+    links: [{ label: "Live demo", href: "https://broke-no-more-ms.vercel.app/", kind: "demo" }],
+    study: {
+      role: "Full Stack Developer",
+      team: "2 people",
+      hero: "/broke-no-more/demo.mp4",
+      gallery: [
+        { src: "/broke-no-more/home.png", caption: "Home — what's left to spend, the daily streak, and quick actions" },
+        { src: "/broke-no-more/transactions.png", caption: "Transactions — search, filter, and swipe-to-undo" },
+        { src: "/broke-no-more/tracker.png", caption: "Monthly Tracker — saved vs spent and spending by category" },
+      ],
+      problem:
+        "Tracking my own daily expenses was genuinely hard. People say bank statements are enough — but what happens when you pay for your friends? The money in and money out stops reflecting what's actually yours. Students need a clear view of their transactions and a dynamic daily allowance to reach a monthly savings target — plus a reason to stay motivated to spend within budget.",
+      features: [
+        { label: "Google OAuth sign-in", detail: "Passport.js with JWT auth and protected routes" },
+        { label: "Mobile-first UI", detail: "phone-width layout, bottom tab bar, drag-to-dismiss bottom sheets" },
+        { label: "Dark & light theme", detail: "system-aware with a manual toggle, reduced-motion support" },
+        { label: "Daily-budget streak", detail: "a self-correcting daily spending limit derived from income, savings targets and spend-to-date — tracking win / break days with a manual streak-restore forgiveness system" },
+        {
+          label: "Transactions",
+          items: [
+            "Add income / expenses from a bottom sheet (type fixed by an Income / Expense button)",
+            "Categories — a fixed set (Food & Drinks, Transport, Shopping, Entertainment, Travel · Allowance, Part-time, Gifts) plus user-created custom categories with their own colour",
+            "Search by description or category, filter by All / Expenses / Income",
+            "Optimistic delete with a 10-second undo",
+          ],
+        },
+        { label: "Calculator", detail: "daily-spend budget & savings-goal calculators with animated results" },
+        { label: "Monthly Tracker", detail: "donut of saved vs spent, plus a colour-coded 'spending by category' donut" },
+        { label: "Stats", detail: "months tracked + average savings rate, and a grouped bar chart across every month" },
+        { label: "Friends", detail: "search users, send / accept / decline requests, and a savings-rate leaderboard" },
+        { label: "Profile", detail: "editable display name, a cute animal avatar (Twemoji), and account deletion" },
+        { label: "Toast notifications", detail: "for key actions — add / delete, friend requests, and more" },
+        { label: "Animations", detail: "page transitions, count-ups, fade / scale-ins, and animated charts" },
+      ],
+      process: [
+        { title: "Colour scheme", detail: "Green throughout to signify money and savings." },
+        { title: "Mobile-first", detail: "Users log transactions on the move, so they need quick, thumb-friendly access." },
+        { title: "Light & dark modes", detail: "To better cater to different user preferences." },
+        { title: "Leaderboards & streaks", detail: "Extra motivation to keep within budget and keep saving." },
+      ],
+      challenges:
+        "The hardest part was the design — getting the UI/UX right so users always know where the functions are, can view their spending at a glance, and can add a transaction in seconds.",
+      outcome:
+        "Friends and family now use it to keep track of their expenses and stay within their budgets.",
+    },
   },
   {
     id: "ellipsis",
@@ -81,55 +169,49 @@ export const projects = [
   },
 ];
 
-// Short, scannable "proud of" highlights for the horizontal rail.
-export const wins = [
+// A quick "by the numbers" snapshot — personality + headline figures that
+// complement (not repeat) the detailed project cards.
+export const stats = [
   {
-    tag: "Endurance",
-    title: "2XU Half Marathon",
-    stat: "21.1 km",
-    blurb: "Trained for months, then ran the whole thing and surprised myself with an okay timing (2hr 17mins) LOL.",
+    tag: "Running",
+    stat: "2:17",
+    unit: "hr",
+    label: "First half marathon",
+    sub: "21.1 km at the 2XU — and I finished standing.",
     accent: "sky",
-    emoji: "🏅",
+    emoji: "🏃",
   },
   {
-    tag: "Hackathon",
-    title: "Built “Let’s Cook”",
-    stat: "SMU.Hack HEAP",
-    blurb: "Shipped a full-stack recipe + cooking app with 4 teammates over a single hackathon sprint.",
-    accent: "coral",
-    emoji: "🍳",
-  },
-  {
-    tag: "Certified",
-    title: "Google Data Analytics",
-    stat: "Professional Cert",
-    blurb: "Cleaned messy data in SQL & R and built end-to-end dashboards in Tableau.",
+    tag: "Credentials",
+    stat: "2",
+    label: "Pro certifications",
+    sub: "Google Data Analytics + HackerRank Python.",
     accent: "ocean",
     emoji: "📊",
   },
   {
-    tag: "Design",
-    title: "Judokas Connect identity",
-    stat: "One summer",
-    blurb: "Went from “what is CSS” to designing a whole app’s visual language in a few weeks.",
-    accent: "grape",
-    emoji: "🎨",
+    tag: "Active",
+    stat: "5",
+    label: "Sports in rotation",
+    sub: "Volleyball, running, cycling, basketball & more.",
+    accent: "coral",
+    emoji: "🏐",
   },
   {
-    tag: "Leadership",
-    title: "Tech Series Hackathon",
-    stat: "Co-organised 2025",
-    blurb: "Helped plan and run a campus-wide hackathon end to end as part of the CIS Society.",
-    accent: "sun",
-    emoji: "🤝",
+    tag: "Photography",
+    stat: "100s",
+    label: "Photos taken",
+    sub: "Always out chasing better light.",
+    accent: "grape",
+    emoji: "📸",
   },
   {
     tag: "Community",
-    title: "Project YOLO",
-    stat: "2 years",
-    blurb: "Mentored 7 Year-1 students and ran heritage-education experiences for underprivileged kids.",
-    accent: "coral",
-    emoji: "🧒",
+    stat: "2 yrs",
+    label: "Giving back",
+    sub: "Mentoring students and heritage work for kids.",
+    accent: "sun",
+    emoji: "🤝",
   },
 ];
 
@@ -193,5 +275,4 @@ export const certs = [
 export const socials = [
   { label: "Email", href: "mailto:shaunteo2003@gmail.com", kind: "mail" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/shaun-teo-075a6a332", kind: "linkedin" },
-  { label: "Phone", href: "tel:+6587874272", kind: "phone" },
 ];

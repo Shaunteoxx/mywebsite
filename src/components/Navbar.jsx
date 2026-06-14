@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Volleyball } from "./Doodles";
 
 const links = [
   { label: "Work", href: "#work" },
@@ -26,9 +25,8 @@ export default function Navbar() {
             : "border-transparent bg-transparent"
         }`}
       >
-        <a href="#top" className="group flex items-center gap-2 font-display text-lg font-semibold text-ink">
-          <Volleyball className="h-7 w-7 text-coral transition-transform duration-300 group-hover:rotate-180" />
-          <span>Shaun</span>
+        <a href="#top" className="font-display text-lg font-semibold text-ink">
+          Shaun
         </a>
 
         <ul className="flex items-center gap-1 sm:gap-2">

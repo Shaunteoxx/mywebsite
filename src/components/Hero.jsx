@@ -52,6 +52,7 @@ export default function Hero() {
   const vel = useRef({ x: 0, y: 0 });
   const rafId = useRef(0);
   const lastT = useRef(0);
+  const bounds = useRef({ minX: -9999, maxX: 9999 }); // wall limits, set on throw
 
   const stopSim = () => {
     if (rafId.current) cancelAnimationFrame(rafId.current);
@@ -80,18 +81,15 @@ export default function Hero() {
       vx *= 0.86;
     }
 
-    // bounce off the viewport edges so it never sticks to the sides
-    const el = ballRef.current;
-    if (el) {
-      const r = el.getBoundingClientRect();
-      const pad = 6;
-      if (r.left < pad) {
-        x += pad - r.left;
-        vx = Math.abs(vx) * 0.68;
-      } else if (r.right > window.innerWidth - pad) {
-        x -= r.right - (window.innerWidth - pad);
-        vx = -Math.abs(vx) * 0.68;
-      }
+    // bounce off the viewport edges using precomputed limits (no per-frame
+    // getBoundingClientRect → no layout thrash, smooth on mobile)
+    const b = bounds.current;
+    if (x < b.minX) {
+      x = b.minX;
+      vx = Math.abs(vx) * 0.68;
+    } else if (x > b.maxX) {
+      x = b.maxX;
+      vx = -Math.abs(vx) * 0.68;
     }
 
     ballX.set(x);
@@ -113,6 +111,17 @@ export default function Hero() {
       ballX.set(0);
       ballY.set(0);
       return;
+    }
+    // measure the wall limits once, here, from the current position
+    const el = ballRef.current;
+    if (el) {
+      const r = el.getBoundingClientRect();
+      const curX = ballX.get();
+      const pad = 6;
+      bounds.current = {
+        minX: curX - (r.left - pad),
+        maxX: curX + (window.innerWidth - pad - r.right),
+      };
     }
     vel.current = { x: info.velocity.x, y: info.velocity.y };
     lastT.current = performance.now();
@@ -139,11 +148,11 @@ export default function Hero() {
       <div aria-hidden className="pointer-events-none absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-coral/20 blur-3xl" />
 
       {/* floating doodles */}
-      <ParallaxDoodle depth={50} reduced={reduced} className="left-[6%] top-[22%] hidden sm:block">
-        <Sun className="h-12 w-12 text-sun" style={{ "--r": "0deg" }} />
+      <ParallaxDoodle depth={50} reduced={reduced} className="left-[6%] top-[14%] sm:top-[22%]">
+        <Sun className="h-11 w-11 text-sun sm:h-12 sm:w-12" style={{ "--r": "0deg" }} />
       </ParallaxDoodle>
-      <ParallaxDoodle depth={88} reduced={reduced} className="right-[10%] top-[18%]">
-        <Bike className="h-14 w-14 text-ocean" />
+      <ParallaxDoodle depth={88} reduced={reduced} className="right-[8%] top-[14%] sm:right-[10%] sm:top-[18%]">
+        <Bike className="h-12 w-12 text-ocean sm:h-14 sm:w-14" />
       </ParallaxDoodle>
       <ParallaxDoodle depth={64} reduced={reduced} className="right-[18%] bottom-[16%] hidden md:block">
         <Basketball className="h-12 w-12 text-coral" />
@@ -151,11 +160,19 @@ export default function Hero() {
       <ParallaxDoodle depth={38} reduced={reduced} className="left-[12%] bottom-[20%] hidden md:block">
         <Star className="h-9 w-9 text-grape" />
       </ParallaxDoodle>
-      <ParallaxDoodle depth={76} reduced={reduced} className="left-[5%] top-[52%] hidden lg:block">
-        <Camera className="h-14 w-14 text-grape" />
+      <ParallaxDoodle
+        depth={76}
+        reduced={reduced}
+        className="left-[6%] bottom-[7%] lg:left-[5%] lg:top-[52%] lg:bottom-auto"
+      >
+        <Camera className="h-11 w-11 text-grape lg:h-14 lg:w-14" />
       </ParallaxDoodle>
-      <ParallaxDoodle depth={68} reduced={reduced} className="right-[6%] top-[58%] hidden lg:block">
-        <Stopwatch className="h-14 w-14 text-sky" />
+      <ParallaxDoodle
+        depth={68}
+        reduced={reduced}
+        className="right-[6%] bottom-[7%] lg:top-[58%] lg:bottom-auto"
+      >
+        <Stopwatch className="h-11 w-11 text-sky lg:h-14 lg:w-14" />
       </ParallaxDoodle>
 
       <div className="relative z-10 mx-auto w-full max-w-4xl text-center">

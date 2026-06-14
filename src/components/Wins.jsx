@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useReducedMotion } from "motion/react";
-import { wins } from "../data";
+import { stats } from "../data";
 import { Squiggle } from "./Doodles";
 
 const accents = {
-  coral: { chip: "bg-coral/12 text-coral", ring: "hover:border-coral/50", bar: "bg-coral" },
-  ocean: { chip: "bg-ocean/12 text-ocean-deep", ring: "hover:border-ocean/50", bar: "bg-ocean" },
-  grape: { chip: "bg-grape/12 text-grape", ring: "hover:border-grape/50", bar: "bg-grape" },
-  sky: { chip: "bg-sky/15 text-sky", ring: "hover:border-sky/50", bar: "bg-sky" },
-  sun: { chip: "bg-sun/20 text-ink", ring: "hover:border-sun/60", bar: "bg-sun" },
+  coral: { chip: "bg-coral/12 text-coral", ring: "hover:border-coral/50", bar: "bg-coral", num: "text-coral" },
+  ocean: { chip: "bg-ocean/12 text-ocean-deep", ring: "hover:border-ocean/50", bar: "bg-ocean", num: "text-ocean-deep" },
+  grape: { chip: "bg-grape/12 text-grape", ring: "hover:border-grape/50", bar: "bg-grape", num: "text-grape" },
+  sky: { chip: "bg-sky/15 text-sky", ring: "hover:border-sky/50", bar: "bg-sky", num: "text-sky" },
+  sun: { chip: "bg-sun/20 text-ink", ring: "hover:border-sun/60", bar: "bg-sun", num: "text-ink" },
 };
 
 export default function Wins() {
@@ -55,13 +55,13 @@ export default function Wins() {
   };
 
   return (
-    <section id="proud" className="relative scroll-mt-24 px-5 py-16 sm:px-8 sm:py-20">
+    <section id="snapshot" className="relative scroll-mt-24 px-5 py-16 sm:px-8 sm:py-20">
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="font-display text-sm font-semibold uppercase tracking-[0.2em] text-ocean-deep">Highlights</p>
+            <p className="font-display text-sm font-semibold uppercase tracking-[0.2em] text-ocean-deep">Snapshot</p>
             <h2 className="mt-2 font-display text-4xl font-bold text-ink sm:text-5xl">
-              A few <span className="squiggle">proud</span> moments
+              Me, by the <span className="squiggle">numbers</span>
             </h2>
             <Squiggle className="mt-3 h-3 w-28 text-coral" />
           </div>
@@ -72,7 +72,7 @@ export default function Wins() {
               type="button"
               onClick={() => scrollByCards(-1)}
               disabled={atStart}
-              aria-label="Previous highlights"
+              aria-label="Previous stats"
               className="grid h-11 w-11 cursor-pointer place-items-center rounded-full border-2 border-ink/15 bg-white/70 text-ink transition-colors duration-200 hover:border-ink/40 hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
             >
               <ChevronLeft className="h-5 w-5" />
@@ -81,7 +81,7 @@ export default function Wins() {
               type="button"
               onClick={() => scrollByCards(1)}
               disabled={atEnd}
-              aria-label="Next highlights"
+              aria-label="Next stats"
               className="grid h-11 w-11 cursor-pointer place-items-center rounded-full border-2 border-ink/15 bg-white/70 text-ink transition-colors duration-200 hover:border-ink/40 hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
             >
               <ChevronRight className="h-5 w-5" />
@@ -93,41 +93,46 @@ export default function Wins() {
         <div
           ref={trackRef}
           role="region"
-          aria-label="Things I'm proud of — scroll horizontally"
+          aria-label="Me, by the numbers — scroll horizontally"
           tabIndex={0}
           className="mt-8 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 [-ms-overflow-style:none] [scrollbar-width:none] focus:outline-none focus-visible:ring-2 focus-visible:ring-ocean/60 [&::-webkit-scrollbar]:hidden"
           style={{ overscrollBehaviorX: "contain" }}
         >
-          {wins.map((w) => {
-            const a = accents[w.accent] ?? accents.ocean;
+          {stats.map((s) => {
+            const a = accents[s.accent] ?? accents.ocean;
             return (
               <article
-                key={w.title}
-                className={`group relative flex w-[82%] shrink-0 snap-start flex-col rounded-[28px] border-2 border-ink/10 bg-white/80 p-7 shadow-[0_18px_40px_-24px_rgba(27,42,65,0.45)] transition-colors duration-300 sm:w-[330px] ${a.ring}`}
+                key={s.label}
+                className={`group relative flex w-[72%] shrink-0 snap-start flex-col rounded-[28px] border-2 border-ink/10 bg-white/80 p-7 shadow-[0_18px_40px_-24px_rgba(27,42,65,0.45)] transition-colors duration-300 sm:w-[270px] ${a.ring}`}
               >
-                <span aria-hidden className="text-4xl">{w.emoji}</span>
-                <span className={`mt-4 w-fit rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider ${a.chip}`}>
-                  {w.tag}
-                </span>
-                <h3 className="mt-3 font-display text-2xl font-semibold leading-tight text-ink">{w.title}</h3>
-                <p className="mt-1 font-display text-lg font-medium text-ink-soft">{w.stat}</p>
-                <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">{w.blurb}</p>
+                <div className="flex items-center justify-between">
+                  <span className={`w-fit rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider ${a.chip}`}>
+                    {s.tag}
+                  </span>
+                  <span aria-hidden className="text-2xl">{s.emoji}</span>
+                </div>
+                <p className={`mt-5 font-display text-5xl font-bold leading-none ${a.num}`}>
+                  {s.stat}
+                  {s.unit && <span className="ml-1 align-baseline text-2xl font-semibold">{s.unit}</span>}
+                </p>
+                <h3 className="mt-3 font-display text-xl font-semibold leading-tight text-ink">{s.label}</h3>
+                <p className="mt-1.5 text-[15px] leading-relaxed text-ink-soft">{s.sub}</p>
               </article>
             );
           })}
         </div>
 
         {/* Progress dots */}
-        <div className="mt-2 flex justify-center gap-2 sm:justify-start" role="tablist" aria-label="Highlight slides">
-          {wins.map((w, i) => (
+        <div className="mt-2 flex justify-center gap-2 sm:justify-start" role="tablist" aria-label="Stat slides">
+          {stats.map((s, i) => (
             <button
-              key={w.title}
+              key={s.label}
               type="button"
               onClick={() => scrollToCard(i)}
-              aria-label={`Go to ${w.title}`}
+              aria-label={`Go to ${s.label}`}
               aria-selected={i === active}
               className={`h-2 cursor-pointer rounded-full transition-all duration-300 ${
-                i === active ? `w-6 ${accents[w.accent]?.bar ?? "bg-ink"}` : "w-2 bg-ink/20 hover:bg-ink/40"
+                i === active ? `w-6 ${accents[s.accent]?.bar ?? "bg-ink"}` : "w-2 bg-ink/20 hover:bg-ink/40"
               }`}
             />
           ))}
