@@ -143,34 +143,36 @@ export default function CaseStudy({ project, onClose }) {
           </dl>
         </header>
 
-        {/* Hero visual */}
-        <div className="mt-8">
-          {s?.hero ? (
-            isVideo(s.hero) ? (
-              <video
-                src={s.hero}
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="mx-auto max-h-[78vh] rounded-[28px] border-2 border-ink/10 shadow-[0_24px_50px_-24px_rgba(27,42,65,0.5)]"
-              />
+        {/* Hero visual — shown when there's media, or a prompt only on the blank template */}
+        {(s?.hero || !s) && (
+          <div className="mt-8">
+            {s?.hero ? (
+              isVideo(s.hero) ? (
+                <video
+                  src={s.hero}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="mx-auto max-h-[78vh] rounded-[28px] border-2 border-ink/10 shadow-[0_24px_50px_-24px_rgba(27,42,65,0.5)]"
+                />
+              ) : (
+                <img
+                  src={s.hero}
+                  alt={`${project.title} preview`}
+                  className="mx-auto max-h-[78vh] rounded-[28px] border-2 border-ink/10"
+                />
+              )
             ) : (
-              <img
-                src={s.hero}
-                alt={`${project.title} preview`}
-                className="mx-auto max-h-[78vh] rounded-[28px] border-2 border-ink/10"
+              <MediaPlaceholder
+                tall
+                icon={Clapperboard}
+                label="Drop the hero shot or a demo GIF here"
+                hint="A short screen-recording of the app in action is the single most convincing thing on this page."
               />
-            )
-          ) : (
-            <MediaPlaceholder
-              tall
-              icon={Clapperboard}
-              label="Drop the hero shot or a demo GIF here"
-              hint="A short screen-recording of the app in action is the single most convincing thing on this page."
-            />
-          )}
-        </div>
+            )}
+          </div>
+        )}
 
         {/* The problem */}
         <section className="mt-12">

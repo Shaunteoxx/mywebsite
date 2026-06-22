@@ -19,29 +19,38 @@ const hobbies = [
 ];
 
 // Shows your photo once public/me.jpg exists; a friendly placeholder until then.
+// Fills its column so it can stand as tall as the bio beside it.
 function Portrait() {
   const [failed, setFailed] = useState(false);
-  if (failed) {
-    return (
-      <div className="grid h-28 w-28 shrink-0 place-items-center rounded-2xl border-2 border-dashed border-ink/20 bg-sand text-center text-ink-soft sm:h-36 sm:w-36">
-        <div className="flex flex-col items-center gap-1 px-2">
-          <User className="h-7 w-7 opacity-60" />
-          <span className="text-[11px] font-semibold leading-tight">
-            A photo of me
-            <br />
-            (drop public/me.jpg)
-          </span>
-        </div>
-      </div>
-    );
-  }
   return (
-    <img
-      src="/me.jpg"
-      alt="Shaun"
-      onError={() => setFailed(true)}
-      className="h-28 w-28 shrink-0 rounded-2xl border-2 border-ink/10 object-cover sm:h-36 sm:w-36"
-    />
+    <div className="group relative h-full min-h-[22rem] overflow-hidden rounded-[28px] border-2 border-ink/10 bg-sand">
+      {failed ? (
+        <div className="grid h-full w-full place-items-center text-center text-ink-soft">
+          <div className="flex flex-col items-center gap-2 px-4">
+            <User className="h-9 w-9 opacity-60" />
+            <span className="text-sm font-semibold leading-tight">
+              A photo of me
+              <br />
+              (drop public/me.jpg)
+            </span>
+          </div>
+        </div>
+      ) : (
+        <>
+          <img
+            src="/me.jpg"
+            alt="Shaun"
+            onError={() => setFailed(true)}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+          />
+          {/* readable caption over the photo */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/75 via-ink/20 to-transparent p-5 pt-12">
+            <p className="font-display text-xl font-bold text-sand">Shaun Teo</p>
+            <p className="text-sm font-semibold text-sand/85">Singapore · Live Laugh Love</p>
+          </div>
+        </>
+      )}
+    </div>
   );
 }
 
@@ -57,26 +66,26 @@ export default function About() {
           <h2 className="mt-2 font-display text-4xl font-bold text-ink sm:text-5xl">A little about me</h2>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-5">
+        <div className="grid gap-6 lg:grid-cols-5 lg:items-stretch">
+          {/* Portrait — big, fills its column */}
+          <div className="lg:col-span-2">
+            <Portrait />
+          </div>
+
           {/* Intro + fun fact */}
           <div className="lg:col-span-3 flex flex-col gap-6">
-            <div className="rounded-[28px] border-2 border-ink/10 bg-white/80 p-7 sm:p-9">
-              <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
-                <Portrait />
-                <div>
-                  <p className="text-lg leading-relaxed text-ink">
-                    I'm a <strong>chill, curious builder</strong> who genuinely enjoys the messy middle of a project —
-                    wrangling data, sketching UI, and getting something working before a deadline. The Business
-                    Analytics + FinTech double track means I get to live in both the <em>numbers</em> and the{" "}
-                    <em>product</em>, which suits me.
-                  </p>
-                  <p className="mt-4 text-lg leading-relaxed text-ink-soft">
-                    When I'm not at a laptop, I'm probably outside — diving for a dig on the sand court, logging
-                    kilometres on a run (yes, I survived the 2XU Half Marathon), on a long ride, or out with my
-                    camera chasing good light.
-                  </p>
-                </div>
-              </div>
+            <div className="flex-1 rounded-[28px] border-2 border-ink/10 bg-white/80 p-7 sm:p-9">
+              <p className="text-lg leading-relaxed text-ink sm:text-xl">
+                I'm a <strong>chill, curious builder</strong> who genuinely enjoys the messy middle of a project —
+                wrangling data, sketching UI, and getting something working before a deadline. The Business
+                Analytics + FinTech double track means I get to live in both the <em>numbers</em> and the{" "}
+                <em>product</em>.
+              </p>
+              <p className="mt-4 text-lg leading-relaxed text-ink-soft sm:text-xl">
+                When I'm not at a laptop, I'm probably outside — diving for a dig on the sand court, logging
+                kilometres on a run (yes, I survived the 2XU Half Marathon), on a long bike ride, or out with my
+                camera chasing good light or out with friends.
+              </p>
             </div>
 
             <button
@@ -107,20 +116,23 @@ export default function About() {
               </span>
             </button>
           </div>
+        </div>
 
-          {/* Hobbies */}
-          <div className="lg:col-span-2 rounded-[28px] border-2 border-ink/10 bg-white/80 p-7 sm:p-9">
-            <h3 className="font-display text-xl font-semibold text-ink">Off the clock</h3>
-            <ul className="mt-5 space-y-4">
-              {hobbies.map(({ name, Icon, tint, bg }) => (
-                <li key={name} className="flex items-center gap-4">
-                  <span className={`grid h-14 w-14 place-items-center rounded-2xl ${bg}`}>
-                    <Icon className={`h-9 w-9 ${tint}`} />
-                  </span>
-                  <span className="font-display text-lg font-medium text-ink">{name}</span>
-                </li>
-              ))}
-            </ul>
+        {/* Hobbies — full-width band */}
+        <div className="mt-6 rounded-[28px] border-2 border-ink/10 bg-white/80 p-7 sm:p-9">
+          <h3 className="font-display text-xl font-semibold text-ink">Off the clock</h3>
+          <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+            {hobbies.map(({ name, Icon, tint, bg }) => (
+              <div
+                key={name}
+                className="flex flex-col items-center gap-3 rounded-2xl border border-ink/8 bg-sand/60 p-5 text-center transition-colors duration-200 hover:border-ink/15"
+              >
+                <span className={`grid h-16 w-16 place-items-center rounded-2xl ${bg}`}>
+                  <Icon className={`h-10 w-10 ${tint}`} />
+                </span>
+                <span className="font-display text-base font-medium text-ink">{name}</span>
+              </div>
+            ))}
           </div>
         </div>
 

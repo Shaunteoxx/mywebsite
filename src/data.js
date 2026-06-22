@@ -5,14 +5,14 @@ export const projects = [
     id: "lets-cook",
     title: "Let's Cook",
     tagline: "A recipe app that actually cooks with you",
-    period: "Oct 2025 · SMU.Hack HEAP",
+    period: "Oct 2025 · School Project",
     accent: "coral",
     emoji: "🍳",
     caseStudy: true,
     blurb:
-      "A full-stack recipe + cooking-management app built with 4 teammates over a hackathon sprint. It pulls 3,000+ recipes from the FatSecret API, then layers on the fun stuff: an interactive cooking mode with real-time timer detection, multi-timer management and audio cues so you never burn the garlic again.",
+      "A full-stack recipe + cooking-management app built with 4 teammates for a school project. It pulls 3,000+ recipes from the FatSecret API, then layers on the fun stuff: an interactive cooking mode with real-time timer detection, multi-timer management and audio cues so you never burn the garlic again.",
     learned:
-      "Shipping fast with a team taught me to scope ruthlessly — and that a tiny audio 'ding' makes a feature feel ten times more polished.",
+      "Calling an API was a lot harder than I thought — every endpoint expects the exact path, parameters and auth, and the smallest mistake returns nothing.",
     highlights: [
       "Cooking mode with multi-timer + audio notifications",
       "Gemini AI generates new recipes from text or photos",
@@ -20,13 +20,81 @@ export const projects = [
       "Mobile-first responsive design across 3 breakpoints",
     ],
     stack: ["Vue 3", "PrimeVue", "Tailwind CSS", "Firebase", "Gemini AI", "FatSecret API"],
-    links: [],
+    links: [{ label: "GitHub", href: "https://github.com/Shaunteoxx/wad2", kind: "repo" }],
+    study: {
+      role: "Full Stack Developer",
+      team: "5 people",
+      problem:
+        "Cooking from an online recipe usually means juggling three things at once — the recipe in one tab, a separate timer app for 'simmer 10–12 minutes', and a notes app for the shopping list. Let's Cook set out to fold all of that into one place: find a recipe (or generate one from what's in your fridge), then actually cook with it through guided steps, built-in timers, and a shopping list that fills itself.",
+      contribution:
+        "Built with a team of five for a school project. As a full-stack developer I focused on the cooking experience and the AI generator — the interactive Cooking Mode, the Gemini-powered recipe generator, calling the API for 3000+ recipes, and a mobile-first responsive UI in Vue 3 + Tailwind.",
+      features: [
+        {
+          label: "Cooking Mode with real-time timer detection",
+          detail:
+            "step text is scanned for durations like '10–12 minutes' or '1 hour' (ranges are averaged and converted to seconds) and turned into a one-tap timer for that step, with an ingredient checklist and servings scaling alongside",
+        },
+        {
+          label: "Multi-timer management + audio cues",
+          detail:
+            "several timers run at once and persist even when you leave a step; each finishes with a Web Audio 'ding' and a browser notification, with pause / resume / clear",
+        },
+        {
+          label: "AI recipe generation (text + image)",
+          detail:
+            "Gemini turns typed ingredients — or an uploaded photo — into a full recipe, constrained to a strict JSON schema with metric/kitchen unit options so the output renders cleanly every time",
+        },
+        {
+          label: "Favourites & collections",
+          detail: "save recipes into custom collections with list organisation and automatic merging",
+        },
+        {
+          label: "Smart shopping list",
+          detail:
+            "automatic ingredient categorisation and cross-recipe consolidation, so duplicate ingredients combine into one tidy grocery list",
+        },
+        {
+          label: "Recipe search — 3,000+ recipes",
+          detail:
+            "browse the FatSecret catalogue plus community-made recipes, each with its own search, ratings and comments",
+        },
+        {
+          label: "Mobile-first responsive UI",
+          detail:
+            "tuned across three device sizes — icon buttons on mobile, text buttons on desktop — built in Vue 3 + Tailwind with custom scroll animations",
+        },
+      ],
+      process: [
+        {
+          title: "One-stop cooking",
+          detail: "Timers and the shopping list live inside the cook flow, so you never have to leave the app mid-recipe.",
+        },
+        {
+          title: "Reliable AI output",
+          detail:
+            "Free-form model text broke the UI constantly, so the generator is locked to a strict JSON schema with normalised units (0.5, not '½').",
+        },
+        {
+          title: "Mobile-first",
+          detail:
+            "People cook with a phone propped up on the counter, so layouts and controls were designed for small screens first.",
+        },
+        {
+          title: "Scope for a sprint",
+          detail: "Shipped the core loop — search / generate → cook → shop — fast, with a five-person team on a tight project timeline.",
+        },
+      ],
+      challenges:
+        "The hardest part was making Gemini's output trustworthy enough to build UI on top of — free text broke parsing constantly, so we constrained it to a strict JSON schema and normalised the units. Calling the API was the other one: it was the first time I called an API. There was not much help from the school so I had to read the API docs on my own and that took a lot of time and trial and error...",
+      outcome:
+        "A working one-stop cooking app to make it easy for Cooks: search the 3,000+ FatSecret catalogue or generate a recipe from text or a photo, then cook it with guided steps, real-time timers, and an auto-consolidating shopping list — all responsive across phone, tablet and laptop.",
+    },
   },
   {
     id: "judokas-connect",
     title: "Judokas Connect",
     tagline: "A home base for the judo community",
-    period: "May–Aug 2024 · Summer Project",
+    period: "May–Aug 2024 · SMU.Hack HEAP Summer Project",
     accent: "ocean",
     emoji: "🥋",
     caseStudy: true,
